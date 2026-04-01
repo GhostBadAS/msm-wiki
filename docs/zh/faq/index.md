@@ -31,6 +31,14 @@
 5. [原版 MosDNS 知识库](https://irine-sistiana.gitbook.io/mosdns-wiki/) 与 [StoreHouse 脚本合集](https://github.com/herozmy/StoreHouse/tree/latest)：用于进阶查阅与脚本实践
 :::
 
+## 6. 为什么有些网站就是不代理？
+
+因为DNS解析结果为国内ip，自动分流直连，如果要强制代理，需将域名添加至DNS服务→规则管理→个性化名单→代理，或DNS服务→规则管理→在线分流中添加国外专属域名规则，注意同步修改代理模块中的分流规则
+<img width="2494" height="277" alt="image" src="https://github.com/user-attachments/assets/13823007-a3a2-4249-bee1-f47dc6ea25d1" />
+<img width="2485" height="418" alt="image" src="https://github.com/user-attachments/assets/dff0c515-c003-4492-8342-a33f7d5d07d7" /><img width="766" height="790" alt="image" src="https://github.com/user-attachments/assets/75349b24-f992-4d33-941c-d586e7e577e6" />
+
+
+
 ## 更多帮助
 
 - [系统诊断](/zh/guide/diagnostics) - 运行 `msm doctor` 自动检测常见问题
