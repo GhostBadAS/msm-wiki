@@ -197,7 +197,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
           RELEASE_URL="https://github.com/msm9527/msm-wiki/releases/tag/${RELEASE_VERSION}"
-          if [ "${FORCE_UPDATE}" != "true" ] && [ "${CHANNEL}" = "stable" ]; then
+          if [ "${FORCE_UPDATE}" != "true" ]; then
             STATUS="$(curl -I -s -o /dev/null -w '%{http_code}' "${RELEASE_URL}")"
             if [ "${STATUS}" -ge 200 ] && [ "${STATUS}" -lt 400 ]; then
               echo "检测到版本 ${RELEASE_VERSION} 已存在于 Release 页面 (${RELEASE_URL})，跳过后续任务"
