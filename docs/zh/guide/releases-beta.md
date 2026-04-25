@@ -6,28 +6,24 @@
 
 ## 🧪 最新 Beta 版本
 
-> 当前 Beta 版本：`beta-1.0.29`  
-> 发布时间：2026-04-24 17:40:22 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.0.29>  
+> 当前 Beta 版本：`beta-1.0.30`  
+> 发布时间：2026-04-26 00:25:47 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.0.30>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
-### 🔧 变更（Changed）
-- 完善 MSM CLI 服务管理流程
-- 强化进程托管自愈恢复逻辑
-
 ### 🐛 修复（Fixed）
-- 修复 MSM CLI 重启状态同步问题
-- 修复前端拆包嵌入黑屏显示
+- 稳定代理网络自愈能力与 Mihomo 校验机制
+- 修复冷启动进程接管及组件更新状态异常
 
 ### 📝 备注（Notes）
-- 0.x 升级 1.x 需重置安全及重新下载 DNS 服务
+- 0.x 升级 1.x 须重置安全并重载 DNS 服务
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`879cc5b`](https://github.com/msm9527/msm/commit/879cc5b657734712cc3c2d965c23c6e2e855e429)
-- **提交信息**: 修复 MSM CLI 重启状态同步 / Fix MSM CLI restart state sync
-- **提交作者**: root
-- **提交时间**: 2026-04-24 17:40:22 CST
+- **源提交**: [`d10e5f0`](https://github.com/msm9527/msm/commit/d10e5f0c5c76af25055f539db363a8528e95688e)
+- **提交信息**: 0.x版本升级到1.x必须 重装或者升级后重置安全重新下载dns服务，切记很重要，dns服务都变了
+- **提交作者**: msm
+- **提交时间**: 2026-04-26 00:25:47 CST
 :::
 
 ---
