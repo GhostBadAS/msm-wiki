@@ -6,23 +6,23 @@
 
 ## 🧪 最新 Beta 版本
 
-> 当前 Beta 版本：`beta-1.0.32`  
-> 发布时间：2026-04-26 10:43:24 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.0.32>  
+> 当前 Beta 版本：`beta-1.0.33`  
+> 发布时间：2026-04-26 19:04:47 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.0.33>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
 ### 🐛 修复（Fixed）
-- 修复备份归档与恢复的安全隐患问题
+- 恢复默认 mosdns 缓存容量并同步策略
 
 ### 📝 备注（Notes）
-- DNS 服务变更，0.x 升级 1.x 需重装或重置安全并重新下载
+- 0.x 升级 1.x 须重置安全并重新下载 dns 服务
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`95a32e3`](https://github.com/msm9527/msm/commit/95a32e3172a6153f34ffde121e55b5e4ddf095e3)
+- **源提交**: [`f746b81`](https://github.com/msm9527/msm/commit/f746b8150d396e4cafb0f2b8eb25bc2482fdc401)
 - **提交信息**: 0.x版本升级到1.x必须 重装或者升级后重置安全重新下载dns服务，切记很重要，dns服务都变了
 - **提交作者**: msm
-- **提交时间**: 2026-04-26 10:43:24 CST
+- **提交时间**: 2026-04-26 19:04:47 CST
 :::
 
 ---
