@@ -6,24 +6,25 @@
 
 ## 🧪 最新 Beta 版本
 
-> 当前 Beta 版本：`beta-1.0.30`  
-> 发布时间：2026-04-26 07:07:53 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.0.30>  
+> 当前 Beta 版本：`beta-1.0.31`  
+> 发布时间：2026-04-26 08:08:18 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.0.31>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
 ### 🐛 修复（Fixed）
-- 修复冷启动进程接管与组件更新状态问题
-- 优化双栈自愈健康检查与代理网络校验稳定性
+- 修正代理网络自愈逻辑误判问题
+- 支持 MosDNS 白名单模式下的本机代理
+- 放宽双栈自愈健康检查策略
 
 ### 📝 备注（Notes）
-- 0.x 升级 1.x 需重置或重装 DNS 服务
+- 0.x 升级 1.x 需重置安全并重新下载 DNS 服务
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`2103412`](https://github.com/msm9527/msm/commit/2103412b160603a85f5b7fde0a51c828fb1bf139)
-- **提交信息**: fix: 放宽双栈自愈健康检查 / Relax dual-stack reconcile health check
-- **提交作者**: root
-- **提交时间**: 2026-04-26 07:07:53 CST
+- **源提交**: [`795dfb0`](https://github.com/msm9527/msm/commit/795dfb05fafbd7c8e47e00224812e5cb9c1d4ceb)
+- **提交信息**: Merge remote-tracking branch 'origin/dev' into dev
+- **提交作者**: msm
+- **提交时间**: 2026-04-26 08:08:18 CST
 :::
 
 ---
