@@ -6,26 +6,23 @@
 
 ## 🧪 最新 Beta 版本
 
-> 当前 Beta 版本：`beta-1.0.35`  
-> 发布时间：2026-04-27 20:12:01 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.0.35>  
+> 当前 Beta 版本：`beta-1.0.36`  
+> 发布时间：2026-04-27 22:33:43 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.0.36>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
-### 🔧 变更（Changed）
-- 降低默认运行时内存预算
-
 ### 🐛 修复（Fixed）
-- 修复强制更新下载后无法安装
+- 修复 Docker Pro 授权意外掉线问题
 
 ### 📝 备注（Notes）
-- 0.x 升至 1.x 需重置安全并重下 DNS
+- 0.x 升级 1.x 需重置安全并重新下载 DNS 服务
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`940d368`](https://github.com/msm9527/msm/commit/940d368ca1a3bfa23ca4bf056c5beb5a911c34a2)
+- **源提交**: [`04ac844`](https://github.com/msm9527/msm/commit/04ac8447b03a55959c3829f2f7d9414654256139)
 - **提交信息**: 0.x版本升级到1.x必须 重装或者升级后重置安全重新下载dns服务，切记很重要，dns服务都变了
 - **提交作者**: msm
-- **提交时间**: 2026-04-27 20:12:01 CST
+- **提交时间**: 2026-04-27 22:33:43 CST
 :::
 
 ---
