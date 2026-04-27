@@ -478,6 +478,28 @@ jobs:
           echo "::warning::派网 APX 构建器缺失，跳过 ${{ matrix.target }} 的 .apx 产物"
           echo "available=false" >> "$GITHUB_OUTPUT"
 
+      - name: 注入稳定版版本号到版本文件
+        shell: bash
+        run: |
+          set -euo pipefail
+          RELEASE_VERSION="${{ needs.prepare.outputs.version }}"
+          ROOT_VERSION_FILE=".version"
+          INTERNAL_VERSION_FILE="backend/internal/version/.version"
+
+          printf "%s\n" "${RELEASE_VERSION}" > "${ROOT_VERSION_FILE}"
+          mkdir -p "$(dirname "${INTERNAL_VERSION_FILE}")"
+          printf "%s\n" "${RELEASE_VERSION}" > "${INTERNAL_VERSION_FILE}"
+
+          ROOT_ACTUAL="$(tr -d '[:space:]' < "${ROOT_VERSION_FILE}")"
+          INTERNAL_ACTUAL="$(tr -d '[:space:]' < "${INTERNAL_VERSION_FILE}")"
+
+          if [ "${ROOT_ACTUAL}" != "${RELEASE_VERSION}" ] || [ "${INTERNAL_ACTUAL}" != "${RELEASE_VERSION}" ]; then
+            echo "error: 注入稳定版版本号失败，.version=${ROOT_ACTUAL}, internal=${INTERNAL_ACTUAL}, 期望=${RELEASE_VERSION}" >&2
+            exit 1
+          fi
+
+          echo "已注入稳定版版本号: ${RELEASE_VERSION}"
+
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
