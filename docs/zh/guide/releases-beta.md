@@ -7,32 +7,33 @@
 ## 🧪 最新 Beta 版本
 
 > 当前 Beta 版本：`beta-1.1.0`  
-> 发布时间：2026-04-30 00:39:05 CST  
+> 发布时间：2026-04-30 01:08:53 CST  
 > - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.1.0>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
 ### ✨ 新增（Added）
-- 支持 MosDNS 国内外 ECS 策略分离
 - 新增授权容灾功能
+- 支持 MosDNS 国内外 ECS 策略适配
 
 ### 🔧 变更（Changed）
 - 隐藏废弃及国外 ECS 上游入口
-- 简化 ECS 设置及 DNS 审计显示
-- 同步 MosDNS 缓存与模板配置
+- 优化 DNS 审计显示及简化 ECS 设置
+- 统一 MosDNS 缓存与模板配置
 
 ### 🐛 修复（Fixed）
-- 修复 ECS 策略状态类型
-- 修复激活 503 状态提示
+- 修复 MosDNS 增量升级配置兼容性问题
+- 修复 ECS 策略状态类型定义错误
+- 修复激活页面 503 状态提示异常
 
 ### 📝 备注（Notes）
-- 0.x 升 1.x 需重置安全并重新下载 DNS 服务
+- 0.x 至 1.x 升级需重装或重置 DNS 服务
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`ad5cf28`](https://github.com/msm9527/msm/commit/ad5cf2844f96484bce33741855fe1a69516b5b49)
-- **提交信息**: fix: 修复 ECS 策略状态类型 / Fix ECS policy state typing
+- **源提交**: [`fd7136c`](https://github.com/msm9527/msm/commit/fd7136cf0ec60d230fee719fe518905b558fa953)
+- **提交信息**: fix: 修复 MosDNS 增量升级配置兼容 / Fix MosDNS incremental upgrade config compatibility
 - **提交作者**: root
-- **提交时间**: 2026-04-30 00:39:05 CST
+- **提交时间**: 2026-04-30 01:08:53 CST
 :::
 
 ---
