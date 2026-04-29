@@ -8,26 +8,36 @@
 
 ## 🚀 最新稳定版本
 
-> 当前稳定版本：`v1.0.35`  
-> 发布时间：2026-04-27 20:14:08 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/1.0.35>  
+> 当前稳定版本：`v1.1.0`  
+> 发布时间：2026-04-30 01:39:48 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/1.1.0>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
+### ✨ 新增（Added）
+- 支持国内外 ECS 策略分离
+- 增加授权容灾功能
+
 ### 🔧 变更（Changed）
-- 降低默认运行时内存预算
+- 隐藏废弃及国外 ECS 上游入口
+- 简化 MSM ECS 设置展示及缓存统计
+- 同步缓存与上游默认值
 
 ### 🐛 修复（Fixed）
-- 修复强制更新下载后无法安装的问题
+- 修复增量升级配置兼容性
+- 修复 ECS 策略状态类型错误
+- 修复激活页面 503 状态提示
+- 修复 OpenRC 重启及自重启逻辑
+- 修复 Docker Pro 授权掉线问题
 
 ### 📝 备注（Notes）
-- 0.x 升级至 1.x 需重置安全并重新下载 DNS 服务
+- 0.x 升 1.x 需重装或重置安全并重下 DNS 服务
 
 ::: details 📋 构建信息
 - **发布通道**: stable（稳定版）
-- **源提交**: [`8f05f4f`](https://github.com/msm9527/msm/commit/8f05f4f76175149da6ac3636a6d84b11d652fae9)
-- **提交信息**: Merge pull request #44 from msm9527/dev
+- **源提交**: [`ca65ffd`](https://github.com/msm9527/msm/commit/ca65ffd90208e9f6d01142458706bc8f317ad446)
+- **提交信息**: Merge pull request #47 from msm9527/dev
 - **提交作者**: msm
-- **提交时间**: 2026-04-27 20:14:08 CST
+- **提交时间**: 2026-04-30 01:39:48 CST
 :::
 
 ---
@@ -35,6 +45,21 @@
 ## 📚 历史版本
 
 > 下面仅列出最近几个版本的主要变更，完整变更记录以 GitHub Release 为准。
+
+### v1.0.35（2026-04-27 20:14） <Badge type="info" text="稳定版" />
+
+- 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/1.0.35>
+
+**新增 / 优化**
+- 降低默认运行时内存预算
+
+**问题修复**
+- 修复强制更新下载后无法安装的问题
+
+**注意事项**
+- 0.x 升级至 1.x 需重置安全并重新下载 DNS 服务
+
+---
 
 ### v1.0.33（2026-04-26 19:28） <Badge type="info" text="稳定版" />
 
