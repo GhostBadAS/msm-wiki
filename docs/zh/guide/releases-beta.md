@@ -6,23 +6,33 @@
 
 ## 🧪 最新 Beta 版本
 
-> 当前 Beta 版本：`beta-1.0.37`  
-> 发布时间：2026-04-28 11:42:22 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.0.37>  
+> 当前 Beta 版本：`beta-1.1.0`  
+> 发布时间：2026-04-30 00:39:05 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.1.0>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
+### ✨ 新增（Added）
+- 支持 MosDNS 国内外 ECS 策略分离
+- 新增授权容灾功能
+
+### 🔧 变更（Changed）
+- 隐藏废弃及国外 ECS 上游入口
+- 简化 ECS 设置及 DNS 审计显示
+- 同步 MosDNS 缓存与模板配置
+
 ### 🐛 修复（Fixed）
-- 修复 OpenRC 重启与更新自重启功能异常
+- 修复 ECS 策略状态类型
+- 修复激活 503 状态提示
 
 ### 📝 备注（Notes）
-- 0.x 升级到 1.x 需重装或重置安全并重新下载 DNS
+- 0.x 升 1.x 需重置安全并重新下载 DNS 服务
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`8046435`](https://github.com/msm9527/msm/commit/8046435b78d240f9cd80cef9d7ea18a36de97f74)
-- **提交信息**: 0.x版本升级到1.x必须 重装或者升级后重置安全重新下载dns服务，切记很重要，dns服务都变了
-- **提交作者**: msm
-- **提交时间**: 2026-04-28 11:42:22 CST
+- **源提交**: [`ad5cf28`](https://github.com/msm9527/msm/commit/ad5cf2844f96484bce33741855fe1a69516b5b49)
+- **提交信息**: fix: 修复 ECS 策略状态类型 / Fix ECS policy state typing
+- **提交作者**: root
+- **提交时间**: 2026-04-30 00:39:05 CST
 :::
 
 ---
