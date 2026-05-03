@@ -7,25 +7,28 @@
 ## 🧪 最新 Beta 版本
 
 > 当前 Beta 版本：`beta-1.1.2`  
-> 发布时间：2026-05-04 06:22:59 CST  
+> 发布时间：2026-05-04 07:10:19 CST  
 > - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.1.2>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
 ### ✨ 新增（Added）
-- 升级页支持恢复及手动应用 MosDNS 自定义配置
+- 升级页支持恢复 MosDNS 自定义配置及手动应用保存配置
+
+### 🔧 变更（Changed）
+- 调整 MosDNS 快路径 TTL 范围
 
 ### 🐛 修复（Fixed）
-- 修复增量升级过程中 MosDNS 配置丢失问题
+- 优化 MosDNS FakeIP TTL；保留增量升级配置
 
 ### 📝 备注（Notes）
-- 0.x 至 1.x 升级需重置安全，DNS 服务底层已变更
+- 0.x 升至 1.x 必须重装或重置安全，重新下载 DNS 服务
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`47a19e0`](https://github.com/msm9527/msm/commit/47a19e055ed25ec4de90c0cdc253897b4e3934fc)
-- **提交信息**: 0.x版本升级到1.x必须 重装或者升级后重置安全重新下载dns服务，切记很重要，dns服务都变了
-- **提交作者**: msm
-- **提交时间**: 2026-05-04 06:22:59 CST
+- **源提交**: [`ccfde9b`](https://github.com/msm9527/msm/commit/ccfde9bcaca6d0a55fb9d46f82f51d3bf1eedd19)
+- **提交信息**: chore: 调整 MosDNS 快路径 TTL 范围 / Tune MosDNS fast-path TTL range
+- **提交作者**: root
+- **提交时间**: 2026-05-04 07:10:19 CST
 :::
 
 ---
