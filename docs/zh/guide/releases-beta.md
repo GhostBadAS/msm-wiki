@@ -6,32 +6,32 @@
 
 ## 🧪 最新 Beta 版本
 
-> 当前 Beta 版本：`beta-1.1.0`  
-> 发布时间：2026-04-30 01:38:14 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.1.0>  
+> 当前 Beta 版本：`beta-1.1.1`  
+> 发布时间：2026-05-03 17:01:42 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.1.1>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
-### ✨ 新增（Added）
-- 适配 MosDNS 国内外分离 ECS 策略
-- 增加授权容灾功能并优化 DNS 审计
-
 ### 🔧 变更（Changed）
-- 同步 MosDNS 各类模板及缓存默认值
-- 隐藏废弃 ECS 上游并简化设置展示
+- 限制 MosDNS 更新前需先升级 MSM
 
 ### 🐛 修复（Fixed）
-- 修复增量升级兼容及 ECS 策略类型问题
-- 优化 FakeIP 缓存路径与激活状态提示
+- 修复战网国内外 DNS 分流规则
+- 修复 MosDNS 原始指标代理异常
+- 修复许可证授权丢失及机器码回退
+- 修复增量升级配置恢复逻辑问题
+- 保留本机本地分流模板规则
+- 同步 MosDNS 失败缓存模板数据
 
 ### 📝 备注（Notes）
-- 0.x 升级至 1.x 需重置安全并重载 DNS 服务
+- 0.x 升级 1.x 必须重装或重置安全并重新下载 DNS
+- 升级前请确认 MSM 组件版本是否满足要求
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`c0ad114`](https://github.com/msm9527/msm/commit/c0ad114c0dac246ec2e561b9a6469dfced6aa7d4)
+- **源提交**: [`ab93366`](https://github.com/msm9527/msm/commit/ab93366a17e770e4560f388becc909fa401bd887)
 - **提交信息**: 0.x版本升级到1.x必须 重装或者升级后重置安全重新下载dns服务，切记很重要，dns服务都变了
 - **提交作者**: msm
-- **提交时间**: 2026-04-30 01:38:14 CST
+- **提交时间**: 2026-05-03 17:01:42 CST
 :::
 
 ---
