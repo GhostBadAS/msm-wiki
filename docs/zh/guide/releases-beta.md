@@ -6,24 +6,20 @@
 
 ## 🧪 最新 Beta 版本
 
-> 当前 Beta 版本：`beta-1.1.6`  
-> 发布时间：2026-05-11 10:03:47 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.1.6>  
+> 当前 Beta 版本：`beta-1.1.7`  
+> 发布时间：2026-05-12 13:37:10 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.1.7>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
 ### 🔧 变更（Changed）
-- 优化自动判定性能、冲突模型及域名缓存策略
-
-### 🐛 修复（Fixed）
-- 修复自动判定确认语义及升级缓存逻辑异常
-- 修复配置恢复兼容性与更新状态恢复异常
+- 优化自动判定批量操作与加载体验，提升交互流畅度。
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`2c20706`](https://github.com/msm9527/msm/commit/2c2070633d53ec036047c93dd4068daf44944ae4)
-- **提交信息**: 同步 MosDNS 模板与后端版本 / Sync MosDNS template and backend version
-- **提交作者**: root
-- **提交时间**: 2026-05-11 10:03:47 CST
+- **源提交**: [`89bdc4b`](https://github.com/msm9527/msm/commit/89bdc4b2ab8cd438b394a8f7ea101c72fac8e6ab)
+- **提交信息**: 1.1.7
+- **提交作者**: msm
+- **提交时间**: 2026-05-12 13:37:10 CST
 :::
 
 ---
