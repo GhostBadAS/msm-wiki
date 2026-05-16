@@ -8,29 +8,37 @@
 
 ## 🚀 最新稳定版本
 
-> 当前稳定版本：`v1.1.2`  
-> 发布时间：2026-05-04 07:20:03 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/1.1.2>  
+> 当前稳定版本：`v1.1.7`  
+> 发布时间：2026-05-16 14:37:18 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/1.1.7>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
 ### ✨ 新增（Added）
-- 升级页支持恢复、应用及保留 MosDNS 配置
+- 添加默认代理 CIDR 216.239.36.0/24
+- 审计存储展示分解与字段透传支持
 
 ### 🔧 变更（Changed）
-- 调整 MosDNS 快路径 TTL 范围
+- 优化通知弹窗居中显示与排版
+- 优化自动判定批量操作与加载体验
+- 优化 MosDNS 缓存策略与模板同步
+- 优化 MosDNS 规则源配置与验证
+- 增强进程管理与升级回滚可靠性
 
 ### 🐛 修复（Fixed）
-- 优化 MosDNS FakeIP TTL 处理
+- 修复 MosDNS 配置恢复与订阅直连问题
+- 修复 MosDNS 自动判定与升级缓存问题
+- 修复更新刷新后状态恢复错误
+- 修正 MosDNS 分流标签语义
 
 ### 📝 备注（Notes）
-- 0.x 升级至 1.x 需重置安全并重下 DNS 服务
+- 0.x 升级 1.x 需重装或重置安全重下 DNS 服务
 
 ::: details 📋 构建信息
 - **发布通道**: stable（稳定版）
-- **源提交**: [`fa80828`](https://github.com/msm9527/msm/commit/fa808280175d84a3d5e04d80f9525806ec01bb50)
-- **提交信息**: Merge pull request #50 from msm9527/dev
+- **源提交**: [`86b384d`](https://github.com/msm9527/msm/commit/86b384d4829410c25784edde441cb374c24ee81c)
+- **提交信息**: Merge pull request #51 from msm9527/dev
 - **提交作者**: msm
-- **提交时间**: 2026-05-04 07:20:03 CST
+- **提交时间**: 2026-05-16 14:37:18 CST
 :::
 
 ---
@@ -38,6 +46,22 @@
 ## 📚 历史版本
 
 > 下面仅列出最近几个版本的主要变更，完整变更记录以 GitHub Release 为准。
+
+### v1.1.2（2026-05-04 07:20） <Badge type="info" text="稳定版" />
+
+- 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/1.1.2>
+
+**新增 / 优化**
+- 升级页支持恢复、应用及保留 MosDNS 配置
+- 调整 MosDNS 快路径 TTL 范围
+
+**问题修复**
+- 优化 MosDNS FakeIP TTL 处理
+
+**注意事项**
+- 0.x 升级至 1.x 需重置安全并重下 DNS 服务
+
+---
 
 ### v1.1.1（2026-05-03 17:52） <Badge type="info" text="稳定版" />
 
