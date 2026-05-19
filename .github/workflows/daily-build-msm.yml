@@ -1176,18 +1176,23 @@ jobs:
   desktop:
     name: 构建 macOS 桌面应用并追加到 Release
     needs: [prepare, release]
-    runs-on: macos-15
-    continue-on-error: true
+    runs-on: ${{ matrix.runs_on }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - target: darwin-amd64
+            runs_on: macos-15-intel
             goos: darwin
             goarch: amd64
+            rust_target: x86_64-apple-darwin
+            macho_arch: x86_64
           - target: darwin-arm64
+            runs_on: macos-15
             goos: darwin
             goarch: arm64
+            rust_target: aarch64-apple-darwin
+            macho_arch: arm64
     steps:
       - name: Checkout MSM 仓库
         uses: actions/checkout@v4
@@ -1207,10 +1212,12 @@ jobs:
         uses: actions/cache@v4
         with:
           path: frontend/node_modules
-          key: npm-frontend-desktop-${{ runner.os }}-${{ hashFiles('frontend/package-lock.json') }}
+          key: npm-frontend-desktop-${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('frontend/package-lock.json') }}
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust_target }}
 
       - name: 缓存 Cargo 依赖与构建
         uses: actions/cache@v4
@@ -1219,7 +1226,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             frontend/src-tauri/target
-          key: cargo-tauri-${{ runner.os }}-${{ hashFiles('frontend/src-tauri/Cargo.lock') }}
+          key: cargo-tauri-${{ runner.os }}-${{ matrix.target }}-${{ hashFiles('frontend/src-tauri/Cargo.lock') }}
 
       - name: 安装前端依赖并构建（Tauri 桌面）
         shell: bash
@@ -1245,11 +1252,20 @@ jobs:
           tar -xzf "dist/msm-${VERSION}-${{ matrix.target }}.tar.gz" -C dist
           ls -l dist
 
+          CLI_ARCHS="$(lipo -archs dist/msm)"
+          if [ "${CLI_ARCHS}" != "${{ matrix.macho_arch }}" ]; then
+            echo "error: CLI 架构不匹配，期望 ${{ matrix.macho_arch }}，实际 ${CLI_ARCHS}" >&2
+            exit 1
+          fi
+          echo "CLI 架构验证通过: ${CLI_ARCHS}"
+
       - name: 构建 Tauri 桌面应用
         shell: bash
         run: |
           set -euo pipefail
           VERSION="${{ needs.prepare.outputs.version }}"
+          TAURI_TARGET="${{ matrix.rust_target }}"
+          EXPECTED_ARCH="${{ matrix.macho_arch }}"
 
           export TAURI_APP_VERSION="${VERSION}"
           export TAURI_BUILD_VERSION="${VERSION}"
@@ -1277,17 +1293,94 @@ jobs:
           # 跳过重复的前端构建
           TAURI_CONF="$SRC_TAURI_DIR/tauri.conf.json"
           cp "$TAURI_CONF" "$TAURI_CONF.backup"
+          restore_tauri_conf() {
+            if [ -f "$TAURI_CONF.backup" ]; then
+              mv "$TAURI_CONF.backup" "$TAURI_CONF"
+            fi
+            rm -f "$TAURI_CONF.tmp"
+          }
+          trap restore_tauri_conf EXIT
+
           sed -i.tmp 's/"beforeBuildCommand":[^,]*,/"beforeBuildCommand": "echo Skipping frontend build",/' "$TAURI_CONF"
 
-          # 使用 Tauri 构建 DMG
-          npm run tauri build
+          # 使用 Tauri 构建指定架构的 DMG
+          npm run tauri build -- --target "$TAURI_TARGET"
 
           # 恢复原始配置
-          mv "$TAURI_CONF.backup" "$TAURI_CONF"
+          restore_tauri_conf
+          trap - EXIT
+
+          BUNDLE_ROOT="$SRC_TAURI_DIR/target/$TAURI_TARGET/release/bundle"
+          APP_PATH=""
+          for candidate in "$BUNDLE_ROOT/macos"/*.app; do
+            if [ -d "$candidate" ]; then
+              APP_PATH="$candidate"
+              break
+            fi
+          done
+
+          if [ -z "$APP_PATH" ]; then
+            echo "error: 未找到 Tauri .app 产物: $BUNDLE_ROOT/macos" >&2
+            exit 1
+          fi
+
+          APP_EXECUTABLE="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$APP_PATH/Contents/Info.plist")"
+          APP_ARCHS="$(lipo -archs "$APP_PATH/Contents/MacOS/$APP_EXECUTABLE")"
+          if [ "$APP_ARCHS" != "$EXPECTED_ARCH" ]; then
+            echo "error: Tauri App 架构不匹配，期望 ${EXPECTED_ARCH}，实际 ${APP_ARCHS}" >&2
+            exit 1
+          fi
+          echo "Tauri App 架构验证通过: ${APP_ARCHS}"
+
+          DMG_PATH=""
+          for candidate in "$BUNDLE_ROOT/dmg"/*.dmg; do
+            if [ -f "$candidate" ]; then
+              DMG_PATH="$candidate"
+              break
+            fi
+          done
+
+          if [ -z "$DMG_PATH" ]; then
+            echo "error: 未找到 Tauri DMG 产物: $BUNDLE_ROOT/dmg" >&2
+            exit 1
+          fi
 
           # 复制 DMG 到 dist 目录，文件名带上架构
           mkdir -p "$DIST_ROOT"
-          cp "$SRC_TAURI_DIR/target/release/bundle/dmg"/*.dmg "$DIST_ROOT/msm-desktop-${VERSION}-${{ matrix.target }}.dmg"
+          OUTPUT_DMG="$DIST_ROOT/msm-desktop-${VERSION}-${{ matrix.target }}.dmg"
+          cp "$DMG_PATH" "$OUTPUT_DMG"
+
+          MOUNT_DIR="$(mktemp -d)"
+          cleanup_dmg_mount() {
+            hdiutil detach "$MOUNT_DIR" >/dev/null 2>&1 || true
+            rmdir "$MOUNT_DIR" >/dev/null 2>&1 || true
+          }
+          trap cleanup_dmg_mount EXIT
+
+          hdiutil attach -nobrowse -readonly -mountpoint "$MOUNT_DIR" "$OUTPUT_DMG" >/dev/null
+          APP_IN_DMG=""
+          for candidate in "$MOUNT_DIR"/*.app; do
+            if [ -d "$candidate" ]; then
+              APP_IN_DMG="$candidate"
+              break
+            fi
+          done
+
+          if [ -z "$APP_IN_DMG" ]; then
+            echo "error: DMG 中未找到 .app: $OUTPUT_DMG" >&2
+            exit 1
+          fi
+
+          DMG_APP_EXECUTABLE="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$APP_IN_DMG/Contents/Info.plist")"
+          DMG_APP_ARCHS="$(lipo -archs "$APP_IN_DMG/Contents/MacOS/$DMG_APP_EXECUTABLE")"
+          if [ "$DMG_APP_ARCHS" != "$EXPECTED_ARCH" ]; then
+            echo "error: DMG App 架构不匹配，期望 ${EXPECTED_ARCH}，实际 ${DMG_APP_ARCHS}" >&2
+            exit 1
+          fi
+          echo "DMG 架构验证通过: ${DMG_APP_ARCHS}"
+
+          cleanup_dmg_mount
+          trap - EXIT
 
       - name: 上传桌面应用 DMG 产物
         uses: actions/upload-artifact@v4
