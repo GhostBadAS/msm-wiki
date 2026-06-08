@@ -6,30 +6,24 @@
 
 ## 🧪 最新 Beta 版本
 
-> 当前 Beta 版本：`beta-1.1.8`  
-> 发布时间：2026-05-30 18:57:29 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.1.8>  
+> 当前 Beta 版本：`beta-1.1.9`  
+> 发布时间：2026-06-08 13:50:47 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.1.9>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
 ### ✨ 新增（Added）
-- 新增 MosDNS 记忆池容量显示与清空功能
+- 保存 mosdns 高级模式状态至本地存储
+- 所有编辑对话框增加防意外关闭确认
 
 ### 🐛 修复（Fixed）
-- 修复 MosDNS 记忆池安全漏洞及数据一致性问题
-- 优化 DNS 解析逻辑，修复 FakeIP 缓存及 Bing/NVIDIA 分流一致性
-- 加固 Nft 网络自愈机制，修复路由丢失及代理失效需重启问题
-- 调整 License 策略，禁止未激活上报 Telemetry 并修复 Pro 门控与安全判定
-- 修复 Mihomo TUN 配置回放及 macOS 默认配置，同步协议切换地址
-
-### 📝 备注（Notes）
-- Telemetry 仅在激活后启动，未激活状态下不再上报数据
+- 修复 mosdns FakeIP 命中后未终止父级序列
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`2761e22`](https://github.com/msm9527/msm/commit/2761e22bcf2598a6e1ce73d594ff9d021a5ed6bc)
-- **提交信息**: 1.1.8
+- **源提交**: [`b3cb9ed`](https://github.com/msm9527/msm/commit/b3cb9ede6d1da0b72b1236bb88b0c23b1e586731)
+- **提交信息**: fix(mihomo): 补齐依赖分析模块修复编译 / Add dependency analysis modules to fix build
 - **提交作者**: msm
-- **提交时间**: 2026-05-30 18:57:29 CST
+- **提交时间**: 2026-06-08 13:50:47 CST
 :::
 
 ---
