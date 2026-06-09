@@ -833,8 +833,9 @@ jobs:
             3. 首次打开时，如果遇到"无法验证开发者"提示：
                - 打开"系统设置" → "隐私与安全性"
                - 点击"仍要打开"按钮
-            4. 由于应用未经过 Apple 公证，提示文件损坏执行下边命令
-               - /usr/bin/xattr -cr "/Applications/msm-desktop.app" && /usr/bin/codesign -fs - "/Applications/msm-desktop.app"
+            4. 由于应用未经过 Apple 公证，macOS 可能拦截首次打开，或提示"文件已损坏/无法打开"。可执行以下命令解除隔离属性：
+               - /usr/bin/xattr -cr "/Applications/msm-desktop.app"
+               - 该命令仅用于处理 Gatekeeper/隔离属性拦截；发布流程已校验包内后端签名和可执行性。如果执行后仍无法安装服务，请下载最新版本并反馈错误日志。
 
             </details>
 
@@ -1332,6 +1333,20 @@ jobs:
           fi
           echo "Tauri App 架构验证通过: ${APP_ARCHS}"
 
+          BUNDLED_MSM="$APP_PATH/Contents/Resources/msm"
+          if [ ! -x "$BUNDLED_MSM" ]; then
+            echo "error: Tauri App 缺少可执行内置后端: $BUNDLED_MSM" >&2
+            exit 1
+          fi
+          BUNDLED_MSM_ARCHS="$(lipo -archs "$BUNDLED_MSM")"
+          if [ "$BUNDLED_MSM_ARCHS" != "$EXPECTED_ARCH" ]; then
+            echo "error: 内置后端架构不匹配，期望 ${EXPECTED_ARCH}，实际 ${BUNDLED_MSM_ARCHS}" >&2
+            exit 1
+          fi
+          codesign --verify --strict --verbose=4 "$BUNDLED_MSM"
+          "$BUNDLED_MSM" --version >/dev/null
+          echo "内置后端签名和可执行性验证通过: ${BUNDLED_MSM_ARCHS}"
+
           DMG_PATH=""
           for candidate in "$BUNDLE_ROOT/dmg"/*.dmg; do
             if [ -f "$candidate" ]; then
@@ -1378,6 +1393,20 @@ jobs:
             exit 1
           fi
           echo "DMG 架构验证通过: ${DMG_APP_ARCHS}"
+
+          DMG_BUNDLED_MSM="$APP_IN_DMG/Contents/Resources/msm"
+          if [ ! -x "$DMG_BUNDLED_MSM" ]; then
+            echo "error: DMG 中缺少可执行内置后端: $DMG_BUNDLED_MSM" >&2
+            exit 1
+          fi
+          DMG_BUNDLED_MSM_ARCHS="$(lipo -archs "$DMG_BUNDLED_MSM")"
+          if [ "$DMG_BUNDLED_MSM_ARCHS" != "$EXPECTED_ARCH" ]; then
+            echo "error: DMG 内置后端架构不匹配，期望 ${EXPECTED_ARCH}，实际 ${DMG_BUNDLED_MSM_ARCHS}" >&2
+            exit 1
+          fi
+          codesign --verify --strict --verbose=4 "$DMG_BUNDLED_MSM"
+          "$DMG_BUNDLED_MSM" --version >/dev/null
+          echo "DMG 内置后端签名和可执行性验证通过: ${DMG_BUNDLED_MSM_ARCHS}"
 
           cleanup_dmg_mount
           trap - EXIT
