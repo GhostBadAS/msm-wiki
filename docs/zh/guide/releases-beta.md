@@ -6,24 +6,22 @@
 
 ## 🧪 最新 Beta 版本
 
-> 当前 Beta 版本：`beta-1.1.9`  
-> 发布时间：2026-06-08 13:50:47 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.1.9>  
+> 当前 Beta 版本：`beta-1.2.0`  
+> 发布时间：2026-06-09 15:47:56 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.2.0>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
-### ✨ 新增（Added）
-- 保存 mosdns 高级模式状态至本地存储
-- 所有编辑对话框增加防意外关闭确认
-
 ### 🐛 修复（Fixed）
-- 修复 mosdns FakeIP 命中后未终止父级序列
+- 修复 macOS 服务启动、Daemon 管理及卸载残留
+- 修复桌面托盘切换、服务进度及弹窗确认
+- 修复 MosDNS 审计降级与组件就绪等待
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`b3cb9ed`](https://github.com/msm9527/msm/commit/b3cb9ede6d1da0b72b1236bb88b0c23b1e586731)
-- **提交信息**: fix(mihomo): 补齐依赖分析模块修复编译 / Add dependency analysis modules to fix build
+- **源提交**: [`cc8e9e9`](https://github.com/msm9527/msm/commit/cc8e9e9fbe8d0a1676e35afaa7b9c8f40807f07f)
+- **提交信息**: 修复 Mihomo 编辑弹窗关闭确认 / Fix Mihomo edit dialog close confirmation
 - **提交作者**: msm
-- **提交时间**: 2026-06-08 13:50:47 CST
+- **提交时间**: 2026-06-09 15:47:56 CST
 :::
 
 ---
