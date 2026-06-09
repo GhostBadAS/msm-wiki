@@ -7,21 +7,22 @@
 ## 🧪 最新 Beta 版本
 
 > 当前 Beta 版本：`beta-1.2.0`  
-> 发布时间：2026-06-09 15:47:56 CST  
+> 发布时间：2026-06-09 17:38:51 CST  
 > - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.2.0>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
 ### 🐛 修复（Fixed）
-- 修复 macOS 服务启动、Daemon 管理及卸载残留
-- 修复桌面托盘切换、服务进度及弹窗确认
+- 修复 Mihomo 编辑弹窗关闭确认逻辑
+- 修复桌面托盘切换与服务进度显示
 - 修复 MosDNS 审计降级与组件就绪等待
+- 优化 daemon 安装管理及服务启动清理
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`cc8e9e9`](https://github.com/msm9527/msm/commit/cc8e9e9fbe8d0a1676e35afaa7b9c8f40807f07f)
-- **提交信息**: 修复 Mihomo 编辑弹窗关闭确认 / Fix Mihomo edit dialog close confirmation
-- **提交作者**: msm
-- **提交时间**: 2026-06-09 15:47:56 CST
+- **源提交**: [`6b5c3e0`](https://github.com/msm9527/msm/commit/6b5c3e0750a3ec6c12c47aba3dc67c9bfc1e5dba)
+- **提交信息**: 修复 macOS 发布后端签名 / Fix macOS release backend signing
+- **提交作者**: msm9527
+- **提交时间**: 2026-06-09 17:38:51 CST
 :::
 
 ---
