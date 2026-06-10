@@ -7,22 +7,22 @@
 ## 🧪 最新 Beta 版本
 
 > 当前 Beta 版本：`beta-1.2.0`  
-> 发布时间：2026-06-09 17:38:51 CST  
+> 发布时间：2026-06-10 09:11:51 CST  
 > - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.2.0>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
 ### 🐛 修复（Fixed）
-- 修复 Mihomo 编辑弹窗关闭确认逻辑
-- 修复桌面托盘切换与服务进度显示
-- 修复 MosDNS 审计降级与组件就绪等待
-- 优化 daemon 安装管理及服务启动清理
+- 修复 MosDNS 下载链接、审计降级及组件就绪等待
+- 解决服务启动卡住、Daemon 管理及安装遗留问题
+- 修复 macOS 托管服务控制及卸载残留清理
+- 修复编辑弹窗确认、托盘切换与服务状态显示
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`6b5c3e0`](https://github.com/msm9527/msm/commit/6b5c3e0750a3ec6c12c47aba3dc67c9bfc1e5dba)
-- **提交信息**: 修复 macOS 发布后端签名 / Fix macOS release backend signing
+- **源提交**: [`cd274ab`](https://github.com/msm9527/msm/commit/cd274ab4efa73299235fb424fe02d742f3d8cd0f)
+- **提交信息**: 修复 MosDNS setup 下载地址 / Fix MosDNS setup download URL
 - **提交作者**: msm9527
-- **提交时间**: 2026-06-09 17:38:51 CST
+- **提交时间**: 2026-06-10 09:11:51 CST
 :::
 
 ---
