@@ -7,22 +7,22 @@
 ## 🧪 最新 Beta 版本
 
 > 当前 Beta 版本：`beta-1.2.0`  
-> 发布时间：2026-06-10 09:11:51 CST  
+> 发布时间：2026-06-10 13:54:04 CST  
 > - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.2.0>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
 ### 🐛 修复（Fixed）
-- 修复 MosDNS 下载链接、审计降级及组件就绪等待
-- 解决服务启动卡住、Daemon 管理及安装遗留问题
-- 修复 macOS 托管服务控制及卸载残留清理
-- 修复编辑弹窗确认、托盘切换与服务状态显示
+- macOS 服务启动、更新及安装管理修复
+- 桌面客户端版本同步、托盘及弹窗逻辑修复
+- 网络组件 TUN 转发及 MosDNS 下载稳定性修复
+- 卸载残留清理修复
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`cd274ab`](https://github.com/msm9527/msm/commit/cd274ab4efa73299235fb424fe02d742f3d8cd0f)
-- **提交信息**: 修复 MosDNS setup 下载地址 / Fix MosDNS setup download URL
+- **源提交**: [`53ad284`](https://github.com/msm9527/msm/commit/53ad284527d05efcc6b633886c5667888e110cb9)
+- **提交信息**: 修复桌面端版本同步 / Fix desktop version sync
 - **提交作者**: msm9527
-- **提交时间**: 2026-06-10 09:11:51 CST
+- **提交时间**: 2026-06-10 13:54:04 CST
 :::
 
 ---
