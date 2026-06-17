@@ -8,17 +8,38 @@
 
 ## 🚀 最新稳定版本
 
-> 当前稳定版本：`v1.2.0`  
-> 发布时间：2026-06-10 16:13:10 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/1.2.0>  
+> 当前稳定版本：`v1.2.2`  
+> 发布时间：2026-06-17 16:08:46 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/1.2.2>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
-### ✨ 新增（Added）
+### 📝 备注（Notes）
+- 分析显示该提交为开发标记，关联 #58，详细功能待确认。
+
+::: details 📋 构建信息
+- **发布通道**: stable（稳定版）
+- **源提交**: [`71e809d`](https://github.com/msm9527/msm/commit/71e809decc2fe751e76841fc127ed9ec873e1f5b)
+- **提交信息**: Dev (#58)
+- **提交作者**: msm
+- **提交时间**: 2026-06-17 16:08:46 CST
+:::
+
+---
+
+## 📚 历史版本
+
+> 下面仅列出最近几个版本的主要变更，完整变更记录以 GitHub Release 为准。
+
+### v1.2.0（2026-06-10 16:13） <Badge type="info" text="稳定版" />
+
+- 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/1.2.0>
+
+**新增 / 优化**
 - MosDNS 高级模式状态自动保存到本地
 - 添加记忆池容量显示与一键清空功能
 - Mihomo 编辑对话框增加防误关确认
 
-### 🐛 修复（Fixed）
+**问题修复**
 - 优化 DNS 解析逻辑，修复 FakeIP 缓存及入池规则
 - 升级 License 安全机制，未激活禁止 Telemetry 上报
 - 修复软失败判定漏洞，改为 Fail-Secure 模式
@@ -27,22 +48,10 @@
 - 修复桌面托盘切换、版本同步及 MosDNS 就绪
 - 修复 MosDNS 记忆池安全及数据一致性问题
 
-### 📝 备注（Notes）
+**注意事项**
 - macOS 用户注意：TUN 局域网转发及默认配置已修复
 
-::: details 📋 构建信息
-- **发布通道**: stable（稳定版）
-- **源提交**: [`e4080bb`](https://github.com/msm9527/msm/commit/e4080bb440c40a62377bd8e735abeaf3d1c2e044)
-- **提交信息**: 修复桌面端版本同步 / Fix desktop version sync
-- **提交作者**: msm9527
-- **提交时间**: 2026-06-10 16:13:10 CST
-:::
-
 ---
-
-## 📚 历史版本
-
-> 下面仅列出最近几个版本的主要变更，完整变更记录以 GitHub Release 为准。
 
 ### v1.1.7（2026-05-16 14:37） <Badge type="info" text="稳定版" />
 
