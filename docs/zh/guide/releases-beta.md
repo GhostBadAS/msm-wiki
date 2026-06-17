@@ -7,25 +7,22 @@
 ## 🧪 最新 Beta 版本
 
 > 当前 Beta 版本：`beta-1.2.2`  
-> 发布时间：2026-06-17 14:24:15 CST  
+> 发布时间：2026-06-17 15:05:54 CST  
 > - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.2.2>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
 ### ✨ 新增（Added）
-- 连接页改用 WebSocket 实时流，解决刷新不及时问题
+- 连接页接入 WebSocket 实时流，彻底解决刷新滞后问题
 
 ### 🔧 变更（Changed）
-- 升级 react-grid-layout 依赖库至 v2 版本
-
-### 📝 备注（Notes）
-- 布局库升级可能涉及样式兼容调整
+- 优化首页 Dashboard 布局调整性能及交互细节
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`682ceea`](https://github.com/msm9527/msm/commit/682ceea5f766eaa27d1191eebd1c79bc3bbf29b6)
-- **提交信息**: feat: 升级 react-grid-layout 到 v2 / upgrade react-grid-layout to v2
+- **源提交**: [`2d66921`](https://github.com/msm9527/msm/commit/2d669213a8094a8cb66caf08792af6555d6508b7)
+- **提交信息**: chore: 统一后端版本号到 1.2.2 / align backend version to 1.2.2
 - **提交作者**: msm
-- **提交时间**: 2026-06-17 14:24:15 CST
+- **提交时间**: 2026-06-17 15:05:54 CST
 :::
 
 ---
