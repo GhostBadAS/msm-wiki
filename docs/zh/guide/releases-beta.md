@@ -6,35 +6,26 @@
 
 ## 🧪 最新 Beta 版本
 
-> 当前 Beta 版本：`beta-1.2.1`  
-> 发布时间：2026-06-15 15:32:16 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.2.1>  
+> 当前 Beta 版本：`beta-1.2.2`  
+> 发布时间：2026-06-17 14:24:15 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.2.2>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
 ### ✨ 新增（Added）
-- 规则页增强：支持中文标签、拖拽排序及批量导入
-- 规则与策略组页集成编辑功能，支持跨页联动
-- 代理页支持订阅与节点内联编辑，优化应用体验
-- 应用并重启前增加配置验证流程，防止非法配置
-- 许可证离线授权降级，心跳连接增加三层兜底
+- 连接页改用 WebSocket 实时流，解决刷新不及时问题
 
-### 🐛 修复（Fixed）
-- 修复启动后订阅状态误标为已禁用的问题
-- 优化许可证租约冲突韧性，降低日志噪音
-- 修复代理页排序翻译错位及重复 Key 警告
-- 修复 Linux/macOS TUN 转发自愈与规则清理
-- 修复 macOS TUN 局域网转发及 Launchd 服务更新
-- 修复 MosDNS setup 下载地址异常
+### 🔧 变更（Changed）
+- 升级 react-grid-layout 依赖库至 v2 版本
 
 ### 📝 备注（Notes）
-- 涉及系统网络组件修复，建议重启后生效
+- 布局库升级可能涉及样式兼容调整
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`b2c6934`](https://github.com/msm9527/msm/commit/b2c6934ebb7d7e4af7dc42f589e0392f7c56f081)
-- **提交信息**: fix(mihomo): 修复策略组表单 TS 编译错误 / fix strategy group form TS compile errors
+- **源提交**: [`682ceea`](https://github.com/msm9527/msm/commit/682ceea5f766eaa27d1191eebd1c79bc3bbf29b6)
+- **提交信息**: feat: 升级 react-grid-layout 到 v2 / upgrade react-grid-layout to v2
 - **提交作者**: msm
-- **提交时间**: 2026-06-15 15:32:16 CST
+- **提交时间**: 2026-06-17 14:24:15 CST
 :::
 
 ---
