@@ -7,22 +7,26 @@
 ## 🧪 最新 Beta 版本
 
 > 当前 Beta 版本：`beta-1.2.2`  
-> 发布时间：2026-06-17 15:05:54 CST  
+> 发布时间：2026-06-25 14:50:43 CST  
 > - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.2.2>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
 ### ✨ 新增（Added）
-- 连接页接入 WebSocket 实时流，彻底解决刷新滞后问题
+- 连接页启用 WebSocket 实时流，数据刷新更及时
 
 ### 🔧 变更（Changed）
-- 优化首页 Dashboard 布局调整性能及交互细节
+- 升级 react-grid-layout 至 v2 版本
+- 优化首页及连接页渲染，降低整体资源占用
+
+### 🐛 修复（Fixed）
+- 修复 macOS 系统更新路径解析异常
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`2d66921`](https://github.com/msm9527/msm/commit/2d669213a8094a8cb66caf08792af6555d6508b7)
-- **提交信息**: chore: 统一后端版本号到 1.2.2 / align backend version to 1.2.2
+- **源提交**: [`64cea8b`](https://github.com/msm9527/msm/commit/64cea8b68755b49b72128206e0f593094408a400)
+- **提交信息**: fix: 修复 macOS 更新路径解析 / Fix macOS update path resolution
 - **提交作者**: msm
-- **提交时间**: 2026-06-17 15:05:54 CST
+- **提交时间**: 2026-06-25 14:50:43 CST
 :::
 
 ---
