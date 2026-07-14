@@ -6,27 +6,32 @@
 
 ## 🧪 最新 Beta 版本
 
-> 当前 Beta 版本：`beta-1.2.2`  
-> 发布时间：2026-06-25 14:50:43 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.2.2>  
+> 当前 Beta 版本：`beta-1.2.3`  
+> 发布时间：2026-07-14 10:48:41 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.2.3>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
 ### ✨ 新增（Added）
-- 连接页启用 WebSocket 实时流，数据刷新更及时
-
-### 🔧 变更（Changed）
-- 升级 react-grid-layout 至 v2 版本
-- 优化首页及连接页渲染，降低整体资源占用
+- Pro 激活新增 3D 荣誉勋章展示系统
+- 代理页增加折叠交互与 Hover 动效
+- 许可证增加源站 IP 直连兜底机制
+- 勋章系统适配移动端并支持多页面展示
 
 ### 🐛 修复（Fixed）
-- 修复 macOS 系统更新路径解析异常
+- 修复 mihomo 订阅、节点显示、延迟同步及配置竞态
+- 修复外部重启后端后托管服务不自启
+- 修复许可证网络抖动降级及瞬时错误误报
+- 修复 macOS 更新路径解析及进程接管问题
+- 修复 UI 弹窗、Toast 遮挡问题
+- 修复 3D 勋章背面 Logo 闪烁及视觉缺陷
+- 修复未安装服务日志轮询产生 404 噪音
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`64cea8b`](https://github.com/msm9527/msm/commit/64cea8b68755b49b72128206e0f593094408a400)
-- **提交信息**: fix: 修复 macOS 更新路径解析 / Fix macOS update path resolution
+- **源提交**: [`07f2acb`](https://github.com/msm9527/msm/commit/07f2acb21b2a3fdd821310f75ce93c9335b42812)
+- **提交信息**: chore(release): 版本号升级到 1.2.3 / bump version to 1.2.3
 - **提交作者**: msm
-- **提交时间**: 2026-06-25 14:50:43 CST
+- **提交时间**: 2026-07-14 10:48:41 CST
 :::
 
 ---
