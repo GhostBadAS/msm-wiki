@@ -6,31 +6,22 @@
 
 ## 🧪 最新 Beta 版本
 
-> 当前 Beta 版本：`beta-1.2.3`  
-> 发布时间：2026-07-14 15:53:42 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.2.3>  
+> 当前 Beta 版本：`beta-1.2.4`  
+> 发布时间：2026-07-15 17:30:07 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.2.4>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
-### ✨ 新增（Added）
-- 新增 Pro 荣誉勋章系统，支持真 3D 展示与动态特效
-- 代理页增加折叠交互及 Hover 动效，优化视觉体验
-- 授权模块增加源站 IP 直连兜底，解决 CDN 502 故障
-- 优化许可证心跳与激活逻辑，提升连接稳定性
-
 ### 🐛 修复（Fixed）
-- 订阅更新增强重试，修复机场偶发失败、超时与 404
-- 修复节点显示不全、测速后延迟同步及临时文件竞态
-- 网关 5xx 错误按瞬时处理，防止 Pro 授权因抖动掉线
-- 修复 UI 组件层级，Toast 及确认弹窗不被浮窗遮挡
-- 修复日志接口返回空值，消除前端轮询 404 噪音
-- 修复服务自启失效、配置写入 500 及 macOS 更新解析
+- 修复前端资源哈希失效导致的页面加载错误
+- 修复 Alpine 代理进程身份指纹导致的反复断开
+- 修复订阅节点测速 404 失败，回退至健康检查
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`d126ef1`](https://github.com/msm9527/msm/commit/d126ef13383cbd6e3a05da19a70dce9cf474e94c)
-- **提交信息**: fix(mihomo): 订阅节点测速回退到 provider healthcheck，修复 404 失败
+- **源提交**: [`8e20b21`](https://github.com/msm9527/msm/commit/8e20b21c5d8d6cfd898ab4e07fe64a171450762b)
+- **提交信息**: fix: 同步安全客户端版本来源 / sync security client version source
 - **提交作者**: msm
-- **提交时间**: 2026-07-14 15:53:42 CST
+- **提交时间**: 2026-07-15 17:30:07 CST
 :::
 
 ---
