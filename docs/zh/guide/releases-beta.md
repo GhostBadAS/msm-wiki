@@ -6,22 +6,20 @@
 
 ## 🧪 最新 Beta 版本
 
-> 当前 Beta 版本：`beta-1.2.4`  
-> 发布时间：2026-07-15 17:30:07 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.2.4>  
+> 当前 Beta 版本：`beta-1.2.5`  
+> 发布时间：2026-07-17 15:04:59 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/beta-1.2.5>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
 ### 🐛 修复（Fixed）
-- 修复前端资源哈希失效导致的页面加载错误
-- 修复 Alpine 代理进程身份指纹导致的反复断开
-- 修复订阅节点测速 404 失败，回退至健康检查
+- 修复配置引用问题并提升启动恢复稳定性
 
 ::: details 📋 构建信息
 - **发布通道**: beta（Beta 版）
-- **源提交**: [`8e20b21`](https://github.com/msm9527/msm/commit/8e20b21c5d8d6cfd898ab4e07fe64a171450762b)
-- **提交信息**: fix: 同步安全客户端版本来源 / sync security client version source
+- **源提交**: [`4609a59`](https://github.com/msm9527/msm/commit/4609a59356824b5456291c7b976a902353b70ad3)
+- **提交信息**: chore: 更新版本到 1.2.5 / bump version to 1.2.5
 - **提交作者**: msm
-- **提交时间**: 2026-07-15 17:30:07 CST
+- **提交时间**: 2026-07-17 15:04:59 CST
 :::
 
 ---
