@@ -68,6 +68,11 @@ jobs:
           token: ${{ secrets.MSM_REPO_TOKEN }}
           fetch-depth: 0
 
+      - name: Checkout 当前仓库（msm-wiki）用于发布脚本
+        uses: actions/checkout@v4
+        with:
+          path: msm-wiki
+
       - name: 读取版本信息
         id: meta
         shell: bash
@@ -118,7 +123,7 @@ jobs:
           COMMIT_DATE="$(date -d "@${COMMIT_EPOCH}" +'%Y-%m-%d %H:%M:%S CST')"
           BUILD_TIME="$(date +'%Y-%m-%d %H:%M:%S CST')"
 
-          # 按“上一版发布时间 -> 当前发布时间”统计提交范围
+          # 优先按“上一版源提交 -> 当前 HEAD”统计提交范围；取不到时回退到发布时间窗口
           PREVIOUS_VERSION=""
           PREVIOUS_VERSION_COMMIT=""
           PREVIOUS_RELEASE_PUBLISHED_AT=""
@@ -131,10 +136,13 @@ jobs:
 
           if command -v jq >/dev/null 2>&1; then
             if [ "${CHANNEL}" = "beta" ]; then
-              PREVIOUS_RELEASE_PUBLISHED_AT="$(echo "${RELEASES_JSON}" | jq -r --arg current_tag "${RELEASE_VERSION}" '[.[] | select(.draft == false and .prerelease == true and (.tag_name | startswith("beta-")) and .tag_name != $current_tag and .published_at != null)] | sort_by(.published_at) | last | .published_at // empty' || true)"
+              PREVIOUS_RELEASE_JSON="$(echo "${RELEASES_JSON}" | jq -c --arg current_tag "${RELEASE_VERSION}" '[.[] | select(.draft == false and .prerelease == true and (.tag_name | startswith("beta-")) and .tag_name != $current_tag and .published_at != null)] | sort_by(.published_at) | last // {}' || echo '{}')"
             else
-              PREVIOUS_RELEASE_PUBLISHED_AT="$(echo "${RELEASES_JSON}" | jq -r --arg current_tag "${RELEASE_VERSION}" '[.[] | select(.draft == false and .prerelease == false and ((.tag_name | startswith("beta-")) | not) and .tag_name != $current_tag and .published_at != null)] | sort_by(.published_at) | last | .published_at // empty' || true)"
+              PREVIOUS_RELEASE_JSON="$(echo "${RELEASES_JSON}" | jq -c --arg current_tag "${RELEASE_VERSION}" '[.[] | select(.draft == false and .prerelease == false and ((.tag_name | startswith("beta-")) | not) and .tag_name != $current_tag and .published_at != null)] | sort_by(.published_at) | last // {}' || echo '{}')"
             fi
+
+            PREVIOUS_RELEASE_PUBLISHED_AT="$(echo "${PREVIOUS_RELEASE_JSON}" | jq -r '.published_at // empty' || true)"
+            PREVIOUS_VERSION_COMMIT="$(echo "${PREVIOUS_RELEASE_JSON}" | jq -r '.body // empty' | grep -Eo 'github\.com/msm9527/msm/commit/[0-9A-Fa-f]{40}' | head -n 1 | sed 's#.*/##' || true)"
           else
             echo "warning: jq 不可用，无法按发布时间窗口筛选发布记录" >&2
           fi
@@ -148,15 +156,19 @@ jobs:
             LOG_SINCE_EPOCH=""
           fi
 
-          LOG_ARGS=( "--until=@${LOG_UNTIL_EPOCH}" )
-          if [ -n "${LOG_SINCE_EPOCH}" ]; then
+          LOG_ARGS=()
+          if [ -n "${PREVIOUS_VERSION_COMMIT}" ] && git cat-file -e "${PREVIOUS_VERSION_COMMIT}^{commit}" 2>/dev/null && git merge-base --is-ancestor "${PREVIOUS_VERSION_COMMIT}" HEAD 2>/dev/null; then
             PREVIOUS_VERSION="${PREVIOUS_RELEASE_PUBLISHED_AT}"
-            LOG_ARGS+=( "--since=@${LOG_SINCE_EPOCH}" )
+            LOG_ARGS=( "${PREVIOUS_VERSION_COMMIT}..HEAD" )
+            echo "按上一版源提交统计提交: ${PREVIOUS_VERSION_COMMIT}..HEAD"
+          elif [ -n "${LOG_SINCE_EPOCH}" ]; then
+            PREVIOUS_VERSION="${PREVIOUS_RELEASE_PUBLISHED_AT}"
+            LOG_ARGS=( "--until=@${LOG_UNTIL_EPOCH}" "--since=@${LOG_SINCE_EPOCH}" )
             echo "按发布时间窗口统计提交: ${PREVIOUS_RELEASE_PUBLISHED_AT} -> ${CURRENT_RELEASE_TIME}"
           else
             # 首次发布或未获取到上一版发布时间时，回退到最近 100 条提交
             LOG_ARGS=( "-100" "--until=@${LOG_UNTIL_EPOCH}" )
-            echo "未找到上一版发布时间，回退为最近 100 条提交"
+            echo "未找到上一版源提交或发布时间，回退为最近 100 条提交"
           fi
 
           CHANGELOG="$(git log "${LOG_ARGS[@]}" --pretty=format:'- [%h](https://github.com/msm9527/msm/commit/%H) %s _%an, %ar_' | sed 's/$/\\n/' | tr -d '\n')"
@@ -223,58 +235,24 @@ jobs:
           MODELSCOPE_API_KEY: ${{ secrets.MODELSCOPE_API_KEY }}
         with:
           script: |
-            const { execSync } = require('child_process');
+            const {
+              buildFallbackSummary,
+              buildSummaryPrompt,
+              collectReleaseCommits,
+              requestModelScopeSummary,
+            } = require('./msm-wiki/scripts/ai-release-summary.cjs');
 
             const previousReleasePublishedAt = '${{ steps.meta.outputs.previous_release_published_at }}';
-            const logSinceEpoch = '${{ steps.meta.outputs.log_since_epoch }}';
-            const logUntilEpoch = '${{ steps.meta.outputs.log_until_epoch }}';
-            const sinceNum = Number(logSinceEpoch);
-            const untilNum = Number(logUntilEpoch);
-            const hasSince = logSinceEpoch && logSinceEpoch.trim();
-            const hasUntil = logUntilEpoch && logUntilEpoch.trim();
-            const hasValidWindow = hasSince && hasUntil && !Number.isNaN(sinceNum) && !Number.isNaN(untilNum) && sinceNum < untilNum;
+            const releaseContext = collectReleaseCommits({
+              previousCommit: '${{ steps.meta.outputs.previous_version_commit }}',
+              logSinceEpoch: '${{ steps.meta.outputs.log_since_epoch }}',
+              logUntilEpoch: '${{ steps.meta.outputs.log_until_epoch }}',
+              currentRef: 'HEAD',
+            });
+            const commits = releaseContext.commits;
 
-            // 与 prepare 阶段保持一致：按发布时间窗口获取提交
-            // 使用 %x1F 作为分隔符避免提交信息中的特殊字符干扰
-            const logArgs = ['--pretty=format:%h%x1F%s%x1F%an%x1F%ar'];
-
-            if (hasValidWindow) {
-              logArgs.push(`--since=@${logSinceEpoch}`);
-            } else {
-              // 首次发布、未获取到上一版发布时间或窗口异常时，回退最近 100 条
-              logArgs.push('-100');
-            }
-            if (hasUntil) {
-              logArgs.push(`--until=@${logUntilEpoch}`);
-            }
-
-            const gitLogCmd = `git log ${logArgs.join(' ')}`;
-            if (hasValidWindow) {
-              console.log(`按发布时间窗口获取提交: since=${logSinceEpoch}, until=${logUntilEpoch}`);
-            } else if (hasSince && hasUntil && !Number.isNaN(sinceNum) && !Number.isNaN(untilNum) && sinceNum >= untilNum) {
-              console.log(`发布时间窗口异常，回退获取最近 100 条提交: since=${logSinceEpoch}, until=${logUntilEpoch}`);
-            } else {
-              console.log('未找到有效发布时间窗口，回退获取最近 100 条提交');
-            }
-
-            const commits = execSync(gitLogCmd, { encoding: 'utf-8' })
-              .split('\n')
-              .filter(line => line.trim())
-              .map(line => {
-                // 使用 %x1F (Unit Separator) 分隔，避免提交信息中的特殊字符干扰
-                const parts = line.split('\x1F');
-                if (parts.length >= 4) {
-                  return {
-                    hash: parts[0],
-                    subject: parts[1],
-                    author: parts[2],
-                    date: parts[3]
-                  };
-                }
-                return null;
-              })
-              .filter(commit => commit !== null);
-
+            console.log(`提交范围来源: ${releaseContext.source}`);
+            console.log(`git log 参数: ${releaseContext.rangeArgs.join(' ')}`);
             console.log(`实际获取到 ${commits.length} 个提交记录`);
 
             if (commits.length === 0) {
@@ -285,110 +263,31 @@ jobs:
             // 如果没有 API Key，使用默认总结
             if (!process.env.MODELSCOPE_API_KEY) {
               console.log('未配置 MODELSCOPE_API_KEY，使用默认总结');
-              const summary = previousReleasePublishedAt
-                ? `本次版本从 ${previousReleasePublishedAt} 之后更新，包含 ${commits.length} 个提交，主要更新：${commits[0].subject}`
-                : `本次构建包含 ${commits.length} 个提交，主要更新：${commits[0].subject}`;
-              core.setOutput('summary', summary);
+              core.setOutput('summary', buildFallbackSummary(commits, previousReleasePublishedAt));
               return;
             }
 
             // 调用 ModelScope API 生成总结（OpenAI 兼容格式）
             try {
-              const modelCandidates = ['Qwen/Qwen3.5-35B-A3B', 'ZhipuAI/GLM-5'];
-              let summary = '';
-              let lastError = null;
+              const prompt = buildSummaryPrompt(commits);
+              console.log(`AI prompt 字符数: ${prompt.length}`);
+              const result = await requestModelScopeSummary({
+                apiKey: process.env.MODELSCOPE_API_KEY,
+                prompt,
+                fetchImpl: globalThis.fetch,
+                logger: console,
+              });
 
-              for (const modelName of modelCandidates) {
-                try {
-                  console.log(`尝试使用模型: ${modelName}`);
-                  const response = await fetch('https://api-inference.modelscope.com/v1/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'Authorization': `Bearer ${process.env.MODELSCOPE_API_KEY}`
-                    },
-                    body: JSON.stringify({
-                      model: modelName,
-                      messages: [
-                        {
-                          role: 'system',
-                          content: '你是一个专业的软件版本发布助手，擅长分析 Git 提交记录并生成结构化的版本发布文档。'
-                        },
-                        {
-                          role: 'user',
-                          content: `请分析以下 Git 提交记录，生成结构化的版本发布文档。
-
-              提交记录（共 ${commits.length} 个）：
-              ${commits.map(c => `- ${c.subject} (${c.author}, ${c.date})`).join('\n')}
-            
-              要求：
-                1. 用中文输出
-                2. 按照以下格式分类输出：
-
-            ### ✨ 新增（Added）
-            - 新增的功能或特性
-  
-            ### 🔧 变更（Changed）
-            - 行为调整、重构、配置变更等
-  
-            ### 🐛 修复（Fixed）
-            - Bug 修复、问题解决等
-  
-            ### ⚠️ 废弃（Deprecated）
-            - 即将废弃的功能（如果有）
-  
-            ### 📝 备注（Notes）
-            - 重要的使用注意事项或兼容性说明（如果有）
-  
-            3. **重要**：如果某个分类没有内容，完全省略该分类的标题和内容，不要输出"（无）"
-            4. 每个要点简洁明了，不超过 30 字；最好不要太多太长
-            5. 合并相似的提交,关于一下代码和打包以及不是功能上的提交就不要体现总结出来了
-            6. 突出重要变更, 一些没必要的就不体现出来了，只体现出功能上和bug上的
-            7. 只输出有内容的分类和要点，不要其他内容，你就深度总结一下`
-                        }
-                      ],
-                      temperature: 0.7,
-                      max_tokens: 1024,
-                      stream: false
-                    })
-                  });
-
-                  if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`API 请求失败: ${response.status} - ${errorText}`);
-                  }
-
-                  const data = await response.json();
-                  if (!data.choices || !data.choices[0] || !data.choices[0].message || !data.choices[0].message.content) {
-                    throw new Error('API 响应格式异常');
-                  }
-
-                  summary = data.choices[0].message.content.trim().replace(/^- - /gm, '- ');
-                  console.log(`模型 ${modelName} 调用成功`);
-                  console.log('AI 生成的总结:');
-                  console.log(summary);
-                  if (data.usage) {
-                    console.log(`\n使用的 tokens: 输入=${data.usage.prompt_tokens}, 输出=${data.usage.completion_tokens}, 总计=${data.usage.total_tokens}`);
-                  }
-                  break;
-                } catch (modelError) {
-                  lastError = modelError;
-                  console.error(`模型 ${modelName} 调用失败:`, modelError.message);
-                }
+              console.log(`模型 ${result.modelName} 调用成功`);
+              console.log('AI 生成的总结:');
+              console.log(result.summary);
+              if (result.usage) {
+                console.log(`\n使用的 tokens: 输入=${result.usage.prompt_tokens}, 输出=${result.usage.completion_tokens}, 总计=${result.usage.total_tokens}`);
               }
-
-              if (summary) {
-                core.setOutput('summary', summary);
-              } else {
-                throw (lastError || new Error('所有候选模型均调用失败'));
-              }
+              core.setOutput('summary', result.summary);
             } catch (error) {
               console.error('AI 总结失败:', error.message);
-              // 失败时使用默认总结
-              const summary = previousReleasePublishedAt
-                ? `本次版本从 ${previousReleasePublishedAt} 之后更新，包含 ${commits.length} 个提交，主要更新：${commits[0].subject}`
-                : `本次构建包含 ${commits.length} 个提交，主要更新：${commits[0].subject}`;
-              core.setOutput('summary', summary);
+              core.setOutput('summary', buildFallbackSummary(commits, previousReleasePublishedAt));
             }
 
   build:
