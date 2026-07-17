@@ -8,20 +8,23 @@
 
 ## 🚀 最新稳定版本
 
-> 当前稳定版本：`v1.2.2`  
-> 发布时间：2026-06-17 16:08:46 CST  
-> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/1.2.2>  
+> 当前稳定版本：`v1.2.5`  
+> 发布时间：2026-07-17 15:54:26 CST  
+> - 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/1.2.5>  
 > - 下载方式：同一发布页内提供各平台二进制、安装包、派网 APX 与 SHA256 校验清单
 
-### 📝 备注（Notes）
-- 分析显示该提交为开发标记，关联 #58，详细功能待确认。
+### 🐛 修复（Fixed）
+- 修复 macOS Mihomo TUN 默认配置问题
+- 修复配置更新时 Mihomo 运行参数未回放
+- 统一 Fake-IP 默认值为 28.0.0.1/8
+- 修复 HTTP/HTTPS 切换后运行时地址不同步
 
 ::: details 📋 构建信息
 - **发布通道**: stable（稳定版）
-- **源提交**: [`71e809d`](https://github.com/msm9527/msm/commit/71e809decc2fe751e76841fc127ed9ec873e1f5b)
-- **提交信息**: Dev (#58)
+- **源提交**: [`cdf8bf4`](https://github.com/msm9527/msm/commit/cdf8bf4fbb302ca946196d0022266035f3eb468e)
+- **提交信息**: Dev (#59)
 - **提交作者**: msm
-- **提交时间**: 2026-06-17 16:08:46 CST
+- **提交时间**: 2026-07-17 15:54:26 CST
 :::
 
 ---
@@ -29,6 +32,15 @@
 ## 📚 历史版本
 
 > 下面仅列出最近几个版本的主要变更，完整变更记录以 GitHub Release 为准。
+
+### v1.2.2（2026-06-17 16:08） <Badge type="info" text="稳定版" />
+
+- 发布页：<https://github.com/msm9527/msm-wiki/releases/tag/1.2.2>
+
+**注意事项**
+- 分析显示该提交为开发标记，关联 #58，详细功能待确认。
+
+---
 
 ### v1.2.0（2026-06-10 16:13） <Badge type="info" text="稳定版" />
 
